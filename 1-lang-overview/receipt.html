@@ -2,21 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Receipt Generation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
     <h1>Receipt Generation</h1>
     <a href="../index.html">Home</a>
 
+    <hr>
     <h2>Console Output Only</h2>
-    <p>This page performs all calculations in JavaScript and logs results to the browser console.</p>
-    <p>Open DevTools (Right-click → Inspect → Console tab) to view all parts of the output.</p>
+    <p>This exercise logs the results of formatting prices and generating a grocery receipt. Open your browser’s console to view the outputs.</p>
 
     <script type="text/javascript">
-
-        console.log("---------------------")
+        console.log("---------------------");
         console.log("PART 1...");
 
         function formatUSD(price) {
@@ -26,7 +25,7 @@
         const formattedPrice = formatUSD(4.6777);
         console.log("Formatted Price:", formattedPrice);
 
-        console.log("---------------------")
+        console.log("---------------------");
         console.log("PART 2...");
 
         function formatPct(percentage) {
@@ -36,7 +35,7 @@
         const formattedPct = formatPct(0.0875);
         console.log("Formatted Percentage:", formattedPct);
 
-        console.log("---------------------")
+        console.log("---------------------");
         console.log("PART 3...");
 
         const subtotal = 19.41;
@@ -49,7 +48,7 @@
         console.log("Tax Owed:", formatUSD(taxOwed));
         console.log("Total:", formatUSD(total));
 
-        console.log("---------------------")
+        console.log("---------------------");
         console.log("PART 4...");
 
         function generateReceipt(subtotal, taxRate = 0.0875) {
@@ -69,7 +68,6 @@
         console.log("Receipt Tax Rate:", formatPct(receipt.taxRate));
         console.log("Receipt Tax Owed:", formatUSD(receipt.tax));
         console.log("Receipt Total:", formatUSD(receipt.total));
-
     </script>
 
 </body>

@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Temperature Conversion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
     <h1>Temperature Conversion</h1>
     <a href="../index.html">Home</a>
 
+    <hr>
     <h2>Part 1</h2>
-    <p>This part calculates Fahrenheit from a hardcoded Celsius value (-270°C).</p>
+    <p>This part logs the conversion of -270°C to Fahrenheit using direct math.</p>
 
     <h2>Part 2</h2>
-    <p>This part uses a function to convert Celsius to Fahrenheit and logs the result.</p>
+    <p>This part uses a function to convert Celsius to Fahrenheit and logs it.</p>
 
     <h2>Part 3</h2>
-    <p>Enter a Celsius temperature to convert it dynamically to Fahrenheit:</p>
+    <p>Use the input below to dynamically convert a temperature:</p>
 
     <label for="input-temp-c">Celsius Temperature:</label>
-    <input id="input-temp-c" type="number" placeholder="-270" value="-270">
+    <input id="input-temp-c" type="number" value="-270" placeholder="-270">
     <button id="calculate">Calculate</button>
 
-    <br>
-    <label>Fahrenheit Temperature:</label>
-    <span id="display-temp-f">TODO</span>
+    <p>Fahrenheit Temperature: <span id="display-temp-f">TODO</span></p>
 
     <script type="text/javascript">
-        console.log("---------------------")
+        console.log("---------------------");
         console.log("PART 1...");
 
         const tempC = -270;
@@ -36,7 +36,7 @@
         console.log("Celsius:", tempC);
         console.log("Fahrenheit:", tempF);
 
-        console.log("---------------------")
+        console.log("---------------------");
         console.log("PART 2...");
 
         function calculateTemp(tempC) {
@@ -47,7 +47,7 @@
         console.log("Celsius:", -270);
         console.log("Fahrenheit (via function):", convertedTemp);
 
-        console.log("---------------------")
+        console.log("---------------------");
         console.log("PART 3...");
 
         const inputTempC = document.getElementById("input-temp-c");
