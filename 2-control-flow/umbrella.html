@@ -3,107 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <title>Umbrella</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+
     <h1>Umbrella</h1>
     <a href="../index.html">Home</a>
 
     <h2>Part 1</h2>
-    <p>
-        Write a program to provide instructions based on whether or not it is raining out, and whether or not the user owns an umbrella.
-        Model the concept of whether or not it’s raining in a variable called <code>isRaining</code>, and whether the user owns an umbrella in <code>ownsUmbrella</code>.
-        Use an <code>if</code> statement to provide instructions:
-    </p>
+    <p>Determine what to do based on the weather and whether the user has an umbrella:</p>
     <ul>
-        <li>If it is <strong>not raining</strong>: log "Skies are clear".</li>
-        <li>If it <strong>is raining</strong>: log "Bring your umbrella" if they own one, otherwise "Buy an umbrella".</li>
+        <li>If not raining: log "Skies are clear".</li>
+        <li>If raining: log "Bring your umbrella" or "Buy an umbrella" based on ownership.</li>
     </ul>
 
     <hr>
     <h2>Part 2</h2>
-    <p>
-        Create a function called <code>advise</code> that accepts <code>isRaining</code> and <code>ownsUmbrella</code> as parameters and returns the appropriate message.
-        Test all 4 boolean combinations and log results to the console.
-    </p>
+    <p>A reusable <code>advise()</code> function that returns the appropriate message based on weather conditions.</p>
 
     <hr>
     <h2>Part 3</h2>
-    <p>
-        Use the checkboxes and button below to test the <code>advise</code> function in a UI.
-        When the button is clicked, display the correct message based on the selected options.
-    </p>
+    <p>Use the interface below to test the umbrella advice system:</p>
 
     <label>Is Raining:</label>
-    <input type="checkbox" id="switch-raining" checked>
-    <br>
+    <input type="checkbox" id="switch-raining" checked><br>
 
     <label>Owns Umbrella:</label>
-    <input type="checkbox" id="switch-umbrella" checked>
-    <br>
+    <input type="checkbox" id="switch-umbrella" checked><br>
 
     <button id="advise">Advise</button>
 
-    <br>
-    <label>Message:</label>
-    <span id="display-message">TODO</span>
+    <p><strong>Message:</strong> <span id="display-message">TODO</span></p>
 
     <script type="text/javascript">
+        window.onload = function () {
+            console.log("---------------------");
+            console.log("PART 1...");
 
-        console.log("---------------------")
-        console.log("PART 1...")
+            let isRaining = true;
+            let ownsUmbrella = false;
 
-        // PART 1: Boolean variables and conditional logic
-        let isRaining = true;
-        let ownsUmbrella = false;
+            console.log("Is it raining?", isRaining);
+            console.log("Owns umbrella?", ownsUmbrella);
 
-        console.log("Is it raining?", isRaining);
-        console.log("Owns umbrella?", ownsUmbrella);
-
-        if (!isRaining) {
-            console.log("Skies are clear");
-        } else {
-            if (ownsUmbrella) {
-                console.log("Bring your umbrella");
-            } else {
-                console.log("Buy an umbrella");
-            }
-        }
-
-        console.log("---------------------")
-        console.log("PART 2...")
-
-        // PART 2: Function and testing combinations
-        function advise(isRaining, ownsUmbrella) {
             if (!isRaining) {
-                return "Skies are clear";
+                console.log("Skies are clear");
             } else {
-                return ownsUmbrella ? "Bring your umbrella" : "Buy an umbrella";
+                if (ownsUmbrella) {
+                    console.log("Bring your umbrella");
+                } else {
+                    console.log("Buy an umbrella");
+                }
             }
-        }
 
-        // Test all 4 combinations
-        console.log("Case 1 (false, false):", advise(false, false)); // Skies clear
-        console.log("Case 2 (false, true):", advise(false, true));   // Skies clear
-        console.log("Case 3 (true, false):", advise(true, false));   // Buy umbrella
-        console.log("Case 4 (true, true):", advise(true, true));     // Bring umbrella
+            console.log("---------------------");
+            console.log("PART 2...");
 
-        console.log("---------------------")
-        console.log("PART 3...")
+            function advise(isRaining, ownsUmbrella) {
+                if (!isRaining) {
+                    return "Skies are clear";
+                } else {
+                    return ownsUmbrella ? "Bring your umbrella" : "Buy an umbrella";
+                }
+            }
 
-        // PART 3: Interactive UI
-        const checkboxRaining = document.getElementById("switch-raining");
-        const checkboxUmbrella = document.getElementById("switch-umbrella");
-        const adviseBtn = document.getElementById("advise");
-        const messageDisplay = document.getElementById("display-message");
+            // Test all combinations
+            console.log("Case 1 (false, false):", advise(false, false)); // Skies clear
+            console.log("Case 2 (false, true):", advise(false, true));   // Skies clear
+            console.log("Case 3 (true, false):", advise(true, false));   // Buy umbrella
+            console.log("Case 4 (true, true):", advise(true, true));     // Bring umbrella
 
-        adviseBtn.addEventListener("click", function () {
-            const isRainingChecked = checkboxRaining.checked;
-            const ownsUmbrellaChecked = checkboxUmbrella.checked;
+            console.log("---------------------");
+            console.log("PART 3...");
 
-            const message = advise(isRainingChecked, ownsUmbrellaChecked);
-            messageDisplay.textContent = message;
-        });
+            const checkboxRaining = document.getElementById("switch-raining");
+            const checkboxUmbrella = document.getElementById("switch-umbrella");
+            const adviseBtn = document.getElementById("advise");
+            const messageDisplay = document.getElementById("display-message");
 
+            adviseBtn.addEventListener("click", function () {
+                const isRainingChecked = checkboxRaining.checked;
+                const ownsUmbrellaChecked = checkboxUmbrella.checked;
+
+                const message = advise(isRainingChecked, ownsUmbrellaChecked);
+                messageDisplay.textContent = message;
+            });
+        };
     </script>
+
 </body>
 </html>

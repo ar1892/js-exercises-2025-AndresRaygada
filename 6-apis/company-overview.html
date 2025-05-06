@@ -49,14 +49,14 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script type="text/javascript">
 
-        // Secure API Key Handling
+        // ✅ Secure API Key Handling
         let apiKey = sessionStorage.getItem("ALPHAVANTAGE_API_KEY");
         if (!apiKey) {
             apiKey = prompt("Please enter your AlphaVantage API key:");
             sessionStorage.setItem("ALPHAVANTAGE_API_KEY", apiKey);
         }
 
-        // DOM references
+        // ✅ DOM references
         const inputSymbol = document.getElementById("input-symbol");
         const lookupButton = document.getElementById("lookup");
 
@@ -64,7 +64,7 @@
         const displayDesc = document.getElementById("display-description");
         const displayLink = document.getElementById("display-link");
 
-        // Function to fetch and display company data
+        // ✅ Main function to fetch and render data
         function lookupCompany() {
             const symbol = inputSymbol.value.trim().toUpperCase();
             console.log("SYMBOL:", symbol);
@@ -74,6 +74,12 @@
             d3.json(requestUrl).then(function(data) {
                 console.log("RESPONSE:", data);
 
+                // 🛑 Handle invalid/empty responses
+                if (!data || !data.Name) {
+                    alert("Invalid symbol or API limit exceeded. Please try again.");
+                    return;
+                }
+
                 console.log("---------------------");
                 console.log("PART 1...");
                 console.log("Name:", data.Name);
@@ -82,10 +88,10 @@
 
                 console.log("---------------------");
                 console.log("PART 2...");
-                displayName.textContent = data.Name || "N/A";
-                displayDesc.textContent = data.Description || "N/A";
-                displayLink.textContent = data.Website || "N/A";
-                displayLink.href = data.Website || "#";
+                displayName.textContent = data.Name;
+                displayDesc.textContent = data.Description;
+                displayLink.textContent = data.Website;
+                displayLink.href = data.Website;
 
             }).catch(function(error) {
                 console.error("ERROR:", error);
@@ -93,10 +99,10 @@
             });
         }
 
-        // Call once on page load
+        // ✅ Initial lookup on page load
         lookupCompany();
 
-        // Attach event listener for button
+        // ✅ Re-lookup on button click
         lookupButton.addEventListener("click", lookupCompany);
 
     </script>

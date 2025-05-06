@@ -44,61 +44,60 @@
     <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script type="text/javascript">
 
-        function formatUSD(price) {
-            return `$${price.toFixed(2)}`
-        }
+        window.onload = function () {
 
-        function formatPct(percentage) {
-            return `${(percentage * 100).toFixed(2)}%`
-        }
+            function formatUSD(price) {
+                return `$${price.toFixed(2)}`
+            }
 
-        const symbol = "NFLX"; // AAPL, GOOGL, MSFT, NFLX, NVDA, SPOT
-        const filename = `daily_adjusted_${symbol}.csv`;
-        const requestUrl = `https://raw.githubusercontent.com/prof-rossetti/intro-software-dev-python-book/refs/heads/main/docs/data/${filename}`;
+            function formatPct(percentage) {
+                return `${(percentage * 100).toFixed(2)}%`
+            }
 
-        d3.csv(requestUrl).then(function(data) {
-            console.log("DATA:", data);
+            const symbol = "NFLX"; // AAPL, GOOGL, MSFT, NFLX, NVDA, SPOT
+            const filename = `daily_adjusted_${symbol}.csv`;
+            const requestUrl = `https://raw.githubusercontent.com/prof-rossetti/intro-software-dev-python-book/refs/heads/main/docs/data/${filename}`;
 
-            console.log("---------------------");
-            console.log("PART 1...");
+            d3.csv(requestUrl).then(function(data) {
+                console.log("DATA:", data);
 
-            // Convert adjusted_close to float
-            const cleaned = data.map(row => ({
-                ...row,
-                adjusted_close: parseFloat(row.adjusted_close)
-            }));
+                console.log("---------------------");
+                console.log("PART 1...");
 
-            // D. Total number of days
-            console.log("Number of days:", cleaned.length);
+                const cleaned = data.map(row => ({
+                    ...row,
+                    adjusted_close: parseFloat(row.adjusted_close)
+                }));
 
-            // E. Earliest (last item in CSV)
-            const earliest = cleaned[cleaned.length - 1];
-            console.log("Earliest Date:", earliest.timestamp);
-            console.log("Earliest Adj Close:", formatUSD(earliest.adjusted_close));
+                console.log("Number of days:", cleaned.length);
 
-            // F. Latest (first item in CSV)
-            const latest = cleaned[0];
-            console.log("Latest Date:", latest.timestamp);
-            console.log("Latest Adj Close:", formatUSD(latest.adjusted_close));
+                const earliest = cleaned[cleaned.length - 1];
+                const latest = cleaned[0];
 
-            // G. Percent Change
-            const change = (latest.adjusted_close - earliest.adjusted_close) / earliest.adjusted_close;
-            console.log("Percent Change:", formatPct(change));
+                console.log("Earliest Date:", earliest.timestamp);
+                console.log("Earliest Adj Close:", formatUSD(earliest.adjusted_close));
 
-            console.log("---------------------");
-            console.log("PART 2...");
+                console.log("Latest Date:", latest.timestamp);
+                console.log("Latest Adj Close:", formatUSD(latest.adjusted_close));
 
-            document.getElementById("display-symbol").textContent = symbol;
-            document.getElementById("display-earliest").textContent =
-                `${earliest.timestamp} — ${formatUSD(earliest.adjusted_close)}`;
-            document.getElementById("display-latest").textContent =
-                `${latest.timestamp} — ${formatUSD(latest.adjusted_close)}`;
-            document.getElementById("display-pct-change").textContent = formatPct(change);
+                const change = (latest.adjusted_close - earliest.adjusted_close) / earliest.adjusted_close;
+                console.log("Percent Change:", formatPct(change));
 
-        }).catch(function(error) {
-            console.error("ERROR:", error);
-        });
+                console.log("---------------------");
+                console.log("PART 2...");
 
+                document.getElementById("display-symbol").textContent = symbol;
+                document.getElementById("display-earliest").textContent =
+                    `${earliest.timestamp} — ${formatUSD(earliest.adjusted_close)}`;
+                document.getElementById("display-latest").textContent =
+                    `${latest.timestamp} — ${formatUSD(latest.adjusted_close)}`;
+                document.getElementById("display-pct-change").textContent = formatPct(change);
+
+            }).catch(function(error) {
+                console.error("ERROR:", error);
+            });
+
+        };
     </script>
 </body>
 </html>

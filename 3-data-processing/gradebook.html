@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Gradebook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -11,95 +12,72 @@
     <a href="../index.html">Home</a>
 
     <h2>Part 1</h2>
-    <p>
-        Use the JavaScript `gradebook` object to:
-    </p>
-    <ol type="A">
-        <li>Display the download date (e.g. "2021-06-05")</li>
-        <li>Display the number of students</li>
-        <li>Log each student's name and grade</li>
-        <li>Create a new array of grades</li>
-        <li>Calculate and display the average grade</li>
-        <li>Calculate and display the median grade</li>
-    </ol>
+    <p>Console outputs for: download date, number of students, each student’s grade, average, and median.</p>
 
     <hr>
     <h2>Part 2</h2>
-    <p>
-        Populate the table below with student data: ID, name, and final grade.
-    </p>
+    <p>Table of all student records:</p>
 
-    <table id="display-gradebook" border="1" cellpadding="8">
-    </table>
+    <table id="display-gradebook" border="1" cellpadding="8"></table>
 
     <script src="https://d3js.org/d3-array.v2.min.js"></script>
     <script type="text/javascript">
+        window.onload = function () {
+            const gradebook = {
+                downloadDate: "2021-06-05",
+                professorId: 123,
+                students: [
+                    { studentId: 1, name: "Student 1", finalGrade: 76.7 },
+                    { studentId: 2, name: "Student 2", finalGrade: 85.1 },
+                    { studentId: 3, name: "Student 3", finalGrade: 50.3 },
+                    { studentId: 4, name: "Student 4", finalGrade: 89.8 },
+                    { studentId: 5, name: "Student 5", finalGrade: 97.4 },
+                    { studentId: 6, name: "Student 6", finalGrade: 75.5 },
+                    { studentId: 7, name: "Student 7", finalGrade: 87.2 },
+                    { studentId: 8, name: "Student 8", finalGrade: 88.0 },
+                    { studentId: 9, name: "Student 9", finalGrade: 93.9 },
+                    { studentId: 10, name: "Student 10", finalGrade: 92.5 }
+                ]
+            };
 
-        var gradebook = {
-            "downloadDate": "2021-06-05",
-            "professorId": 123,
-            "students": [
-                {"studentId": 1, "name": "Student 1", "finalGrade": 76.7},
-                {"studentId": 2, "name": "Student 2", "finalGrade": 85.1},
-                {"studentId": 3, "name": "Student 3", "finalGrade": 50.3},
-                {"studentId": 4, "name": "Student 4", "finalGrade": 89.8},
-                {"studentId": 5, "name": "Student 5", "finalGrade": 97.4},
-                {"studentId": 6, "name": "Student 6", "finalGrade": 75.5},
-                {"studentId": 7, "name": "Student 7", "finalGrade": 87.2},
-                {"studentId": 8, "name": "Student 8", "finalGrade": 88.0},
-                {"studentId": 9, "name": "Student 9", "finalGrade": 93.9},
-                {"studentId": 10, "name": "Student 10", "finalGrade": 92.5}
-            ]
-        }
+            console.log("---------------------");
+            console.log("PART 1...");
 
-        console.log("---------------------")
-        console.log("PART 1...")
+            console.log("Download Date:", gradebook.downloadDate);
+            console.log("Number of Students:", gradebook.students.length);
 
-        // A. Display the download date
-        console.log("Download Date:", gradebook.downloadDate);
+            gradebook.students.forEach(student => {
+                console.log(`${student.name}: ${student.finalGrade}`);
+            });
 
-        // B. Number of students
-        console.log("Number of Students:", gradebook.students.length);
+            const grades = gradebook.students.map(s => s.finalGrade);
+            console.log("Grades array:", grades);
 
-        // C. Loop through and log name + grade
-        gradebook.students.forEach(student => {
-            console.log(`${student.name}: ${student.finalGrade}`);
-        });
+            const avg = d3.mean(grades);
+            console.log("Average Grade:", avg.toFixed(2));
 
-        // D. Map to array of grades
-        const grades = gradebook.students.map(student => student.finalGrade);
-        console.log("Grades array:", grades);
+            const median = d3.median(grades);
+            console.log("Median Grade:", median.toFixed(2));
 
-        // E. Average grade
-        const avg = d3.mean(grades);
-        console.log("Average Grade:", avg.toFixed(2));
+            console.log("---------------------");
+            console.log("PART 2...");
 
-        // F. Median grade
-        const median = d3.median(grades);
-        console.log("Median Grade:", median.toFixed(2));
+            const table = document.getElementById("display-gradebook");
 
-        console.log("---------------------")
-        console.log("PART 2...")
+            const header = table.insertRow();
+            ["Student ID", "Student Name", "Final Grade"].forEach(text => {
+                const th = document.createElement("th");
+                th.textContent = text;
+                header.appendChild(th);
+            });
 
-        // Grab table element
-        const table = document.getElementById("display-gradebook");
-
-        // Add header row
-        const header = table.insertRow();
-        ["Student ID", "Student Name", "Final Grade"].forEach(text => {
-            const th = document.createElement("th");
-            th.textContent = text;
-            header.appendChild(th);
-        });
-
-        // Add student rows
-        gradebook.students.forEach(student => {
-            const row = table.insertRow();
-            row.insertCell().textContent = student.studentId;
-            row.insertCell().textContent = student.name;
-            row.insertCell().textContent = student.finalGrade.toFixed(1);
-        });
-
+            gradebook.students.forEach(student => {
+                const row = table.insertRow();
+                row.insertCell().textContent = student.studentId;
+                row.insertCell().textContent = student.name;
+                row.insertCell().textContent = student.finalGrade.toFixed(1);
+            });
+        };
     </script>
 
 </body>

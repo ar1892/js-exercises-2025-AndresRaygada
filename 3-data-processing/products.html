@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Products</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
@@ -30,78 +30,76 @@
     <div id="display-products"></div>
 
     <script type="text/javascript">
-        var products = [
-            {
-                "name": "Textbook",
-                "description": "It has all the answers.",
-                "price": 129.99,
-                "imageURL": "https://picsum.photos/id/24/360/200"
-            },
-            {
-                "name": "Cup of Tea",
-                "description": "An individually-prepared tea or coffee of choice.",
-                "price": 3.49,
-                "imageURL": "https://picsum.photos/id/225/360/200"
-            },
-            {
-                "name": "Strawberries",
-                "description": "Juicy organic strawberries.",
-                "price": 4.99,
-                "imageURL": "https://picsum.photos/id/1080/360/200"
-            }
-        ];
+        window.onload = function () {
+            const products = [
+                {
+                    name: "Textbook",
+                    description: "It has all the answers.",
+                    price: 129.99,
+                    imageURL: "https://picsum.photos/id/24/360/200"
+                },
+                {
+                    name: "Cup of Tea",
+                    description: "An individually-prepared tea or coffee of choice.",
+                    price: 3.49,
+                    imageURL: "https://picsum.photos/id/225/360/200"
+                },
+                {
+                    name: "Strawberries",
+                    description: "Juicy organic strawberries.",
+                    price: 4.99,
+                    imageURL: "https://picsum.photos/id/1080/360/200"
+                }
+            ];
 
-        console.log("---------------------");
-        console.log("PART 1...");
+            console.log("---------------------");
+            console.log("PART 1...");
 
-        // A. Total number of products
-        console.log("Total number of products:", products.length);
+            console.log("Total number of products:", products.length);
 
-        // B. Loop through and display name & price
-        products.forEach(product => {
-            console.log(`${product.name}: $${product.price.toFixed(2)}`);
-        });
+            products.forEach(product => {
+                console.log(`${product.name}: $${product.price.toFixed(2)}`);
+            });
 
-        // C. Filter products with price < 50
-        const matchingProducts = products.filter(product => product.price < 50);
-        console.log("Matching products under $50:", matchingProducts);
+            const matchingProducts = products.filter(p => p.price < 50);
+            console.log("Matching products under $50:", matchingProducts);
+            console.log("Number of matching products:", matchingProducts.length);
 
-        // D. Total number of matching products
-        console.log("Number of matching products:", matchingProducts.length);
+            console.log("---------------------");
+            console.log("PART 2...");
 
-        console.log("---------------------");
-        console.log("PART 2...");
+            const container = document.getElementById("display-products");
 
-        const container = document.getElementById("display-products");
+            products.forEach(product => {
+                const productDiv = document.createElement("div");
 
-        products.forEach(product => {
-            const productDiv = document.createElement("div");
+                const nameP = document.createElement("p");
+                nameP.textContent = `Name: ${product.name}`;
 
-            const nameP = document.createElement("p");
-            nameP.textContent = `Name: ${product.name}`;
+                const descP = document.createElement("p");
+                descP.textContent = `Description: ${product.description}`;
 
-            const descP = document.createElement("p");
-            descP.textContent = `Description: ${product.description}`;
+                const priceP = document.createElement("p");
+                priceP.textContent = `Price: $${product.price.toFixed(2)}`;
 
-            const priceP = document.createElement("p");
-            priceP.textContent = `Price: $${product.price.toFixed(2)}`;
+                const img = document.createElement("img");
+                img.src = product.imageURL;
+                img.alt = product.name;
+                img.width = 360;
+                img.height = 200;
 
-            const img = document.createElement("img");
-            img.src = product.imageURL;
-            img.alt = product.name;
-            img.width = 360;
-            img.height = 200;
+                const hr = document.createElement("hr");
 
-            const hr = document.createElement("hr");
+                productDiv.appendChild(nameP);
+                productDiv.appendChild(descP);
+                productDiv.appendChild(priceP);
+                productDiv.appendChild(img);
+                productDiv.appendChild(hr);
 
-            productDiv.appendChild(nameP);
-            productDiv.appendChild(descP);
-            productDiv.appendChild(priceP);
-            productDiv.appendChild(img);
-            productDiv.appendChild(hr);
-
-            container.appendChild(productDiv);
-        });
+                container.appendChild(productDiv);
+            });
+        };
     </script>
+
 </body>
 </html>

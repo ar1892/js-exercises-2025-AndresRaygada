@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Tweets</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         table, th, td {
             border: 1px solid black;
@@ -18,111 +19,91 @@
     <a href="../index.html">Home</a>
 
     <h2>Part 1</h2>
-    <p>
-        Use the <code>tweets</code> variable and log the answers to the following:
-    </p>
-    <ol type="A">
-        <li>Display screen name of the user who authored the first tweet</li>
-        <li>Display screen names of all users who mentioned "@sandwoah" in a tweet</li>
-        <li>Among those tweets, find the one with the highest likes and display its author's screen name</li>
-    </ol>
+    <p>Results will appear in the browser console.</p>
 
     <hr>
     <h2>Part 2</h2>
-    <p>
-        Sort tweets by likes descending, and display all in a table with the following columns:
-        Tweet ID, Tweet Text, User Screen Name, User Followers, and Tweet Likes.
-    </p>
+    <p>Sorted tweets by likes, rendered below:</p>
 
     <table id="social-feed"></table>
 
     <script src="https://cdn.jsdelivr.net/npm/d3-array@3"></script>
     <script type="text/javascript">
+        window.onload = function () {
+            const tweets = [
+                {
+                    id: 100200297,
+                    full_text: "Look at this delicious sandwich!",
+                    img_url: "https://sandwoah.com/sandwich.png",
+                    user: { screen_name: "sandwoah", followers: 5000 },
+                    likes_count: 150
+                },
+                {
+                    id: 100200298,
+                    full_text: "I love sandwiches",
+                    img_url: null,
+                    user: { screen_name: "user1", followers: 100 },
+                    likes_count: 5
+                },
+                {
+                    id: 100200299,
+                    full_text: "@sandwoah yumm...",
+                    img_url: null,
+                    user: { screen_name: "user2", followers: 200 },
+                    likes_count: 10
+                },
+                {
+                    id: 100200300,
+                    full_text: "@sandwoah that sandwich looks amazing!!",
+                    img_url: null,
+                    user: { screen_name: "user3", followers: 300 },
+                    likes_count: 35
+                },
+                {
+                    id: 100200301,
+                    full_text: "I ate a great sandwich today",
+                    img_url: null,
+                    user: { screen_name: "user4", followers: 400 },
+                    likes_count: 50
+                }
+            ];
 
-        const tweets = [
-            {
-                "id": 100200297,
-                "full_text": "Look at this delicious sandwich!",
-                "img_url": "https://sandwoah.com/sandwich.png",
-                "user": {"screen_name": "sandwoah", "followers": 5000},
-                "likes_count": 150
-            },
-            {
-                "id": 100200298,
-                "full_text": "I love sandwiches",
-                "img_url": null,
-                "user": {"screen_name": "user1", "followers": 100},
-                "likes_count": 5
-            },
-            {
-                "id": 100200299,
-                "full_text": "@sandwoah yumm...",
-                "img_url": null,
-                "user": {"screen_name": "user2", "followers": 200},
-                "likes_count": 10
-            },
-            {
-                "id": 100200300,
-                "full_text": "@sandwoah that sandwich looks amazing!!",
-                "img_url": null,
-                "user": {"screen_name": "user3", "followers": 300},
-                "likes_count": 35
-            },
-            {
-                "id": 100200301,
-                "full_text": "I ate a great sandwich today",
-                "img_url": null,
-                "user": {"screen_name": "user4", "followers": 400},
-                "likes_count": 50
-            }
-        ];
+            console.log("---------------------");
+            console.log("PART 1...");
 
-        console.log("---------------------");
-        console.log("PART 1...");
+            console.log("A. First tweet author:", tweets[0].user.screen_name);
 
-        // A. First tweet's author's screen name
-        console.log("A. First tweet author:", tweets[0].user.screen_name);
+            const mentions = tweets.filter(tweet => tweet.full_text.includes("@sandwoah"));
+            console.log("B. Users who mentioned @sandwoah:");
+            mentions.forEach(tweet => console.log(tweet.user.screen_name));
 
-        // B. Tweets mentioning "@sandwoah"
-        const mentions = tweets.filter(tweet => tweet.full_text.includes("@sandwoah"));
-        console.log("B. Users who mentioned @sandwoah:");
-        mentions.forEach(tweet => {
-            console.log(tweet.user.screen_name);
-        });
+            const topMention = d3.greatest(mentions, d => d.likes_count);
+            console.log("C. Most liked mention's author:", topMention.user.screen_name);
 
-        // C. Find mention with highest likes
-        const topMention = d3.greatest(mentions, d => d.likes_count);
-        console.log("C. Most liked mention's author:", topMention.user.screen_name);
+            console.log("---------------------");
+            console.log("PART 2...");
 
-        console.log("---------------------");
-        console.log("PART 2...");
+            const sortedTweets = [...tweets].sort((a, b) => b.likes_count - a.likes_count);
 
-        // A. Sort by likes descending
-        const sortedTweets = [...tweets].sort((a, b) => b.likes_count - a.likes_count);
+            const table = document.getElementById("social-feed");
 
-        // B. Render table
-        const table = document.getElementById("social-feed");
+            const header = table.insertRow();
+            ["Tweet ID", "Tweet Text", "User Screen Name", "User Followers", "Tweet Likes"].forEach(text => {
+                const th = document.createElement("th");
+                th.textContent = text;
+                header.appendChild(th);
+            });
 
-        // Add header row
-        const header = table.insertRow();
-        const headers = ["Tweet ID", "Tweet Text", "User Screen Name", "User Followers", "Tweet Likes"];
-        headers.forEach(text => {
-            const th = document.createElement("th");
-            th.textContent = text;
-            header.appendChild(th);
-        });
-
-        // Add rows
-        sortedTweets.forEach(tweet => {
-            const row = table.insertRow();
-
-            row.insertCell().textContent = tweet.id;
-            row.insertCell().textContent = tweet.full_text;
-            row.insertCell().textContent = tweet.user.screen_name;
-            row.insertCell().textContent = tweet.user.followers;
-            row.insertCell().textContent = tweet.likes_count;
-        });
-
+            sortedTweets.forEach(tweet => {
+                const row = table.insertRow();
+                row.insertCell().textContent = tweet.id;
+                row.insertCell().textContent = tweet.full_text;
+                row.insertCell().textContent = tweet.user.screen_name;
+                row.insertCell().textContent = tweet.user.followers;
+                row.insertCell().textContent = tweet.likes_count;
+            });
+        };
     </script>
+
 </body>
 </html>

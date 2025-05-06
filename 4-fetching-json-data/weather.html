@@ -2,13 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast (JSON)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         table, th, td {
             border: 1px solid black;
             border-collapse: collapse;
             padding: 5px;
+        }
+        img {
+            height: 40px;
         }
     </style>
 </head>
@@ -46,74 +49,68 @@
     <div id="weather-app">
         <p>Date: <span id="display-date">TODO</span></p>
         <p>Seven Day Forecast:</p>
-        <table id="display-forecast">
-        </table>
+        <table id="display-forecast"></table>
     </div>
 
-    <script type="text/javascript">
-        const degreeSymbol = "\u00B0";
-        const requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/refs/heads/main/data/weather-data.json";
+    <script>
+        window.onload = function () {
+            const degreeSymbol = "\u00B0";
+            const requestUrl = "https://raw.githubusercontent.com/prof-rossetti/internet-technologies/refs/heads/main/data/weather-data.json";
 
-        fetch(requestUrl).then(response => response.json())
-            .then(function(data) {
-                console.log("DATA:", data);
+            fetch(requestUrl).then(response => response.json())
+                .then(function(data) {
+                    console.log("DATA:", data);
 
-                const generated = data.properties.generatedAt;
-                const periods = data.properties.periods;
+                    const generated = data.properties.generatedAt;
+                    const periods = data.properties.periods;
 
-                console.log("---------------------");
-                console.log("PART 1...");
+                    console.log("---------------------");
+                    console.log("PART 1...");
 
-                // A. Date generated
-                console.log("Generated Date:", generated);
+                    console.log("Generated Date:", generated);
+                    console.log("Total Periods:", periods.length);
 
-                // B. Number of periods
-                console.log("Total Periods:", periods.length);
+                    const daytimePeriods = periods.filter(p => p.isDaytime === true);
+                    console.log("Daytime Periods:", daytimePeriods.length);
 
-                // C. Filter daytime periods
-                const daytimePeriods = periods.filter(p => p.isDaytime === true);
-                console.log("Daytime Periods:", daytimePeriods.length);
+                    daytimePeriods.forEach(p => {
+                        const summary = `${p.name}: ${p.temperature}${degreeSymbol}${p.temperatureUnit}, ${p.shortForecast || p.detailedForecast}`;
+                        console.log(summary);
+                    });
 
-                // D. Log summary for each
-                daytimePeriods.forEach(p => {
-                    const summary = `${p.name}: ${p.temperature}${degreeSymbol}${p.temperatureUnit}, ${p.shortForecast || p.detailedForecast}`;
-                    console.log(summary);
-                });
+                    console.log("---------------------");
+                    console.log("PART 2...");
 
-                console.log("---------------------");
-                console.log("PART 2...");
+                    // A. Display generated date
+                    document.getElementById("display-date").textContent = generated.split("T")[0];
 
-                // A. Display generated date
-                document.getElementById("display-date").textContent = generated.split("T")[0];
+                    // B. Render forecast table
+                    const table = document.getElementById("display-forecast");
 
-                // B. Render table
-                const table = document.getElementById("display-forecast");
+                    // Header
+                    const header = table.insertRow();
+                    ["Period", "Temperature", "Forecast", "Icon"].forEach(text => {
+                        const th = document.createElement("th");
+                        th.textContent = text;
+                        header.appendChild(th);
+                    });
 
-                // Add header row
-                const header = table.insertRow();
-                ["Period", "Temperature", "Forecast", "Icon"].forEach(text => {
-                    const th = document.createElement("th");
-                    th.textContent = text;
-                    header.appendChild(th);
-                });
+                    // Rows
+                    daytimePeriods.forEach(period => {
+                        const row = table.insertRow();
+                        row.insertCell().textContent = period.name;
+                        row.insertCell().textContent = `${period.temperature}${degreeSymbol}${period.temperatureUnit}`;
+                        row.insertCell().textContent = period.shortForecast || period.detailedForecast;
 
-                // Add rows for each daytime forecast
-                daytimePeriods.forEach(period => {
-                    const row = table.insertRow();
-
-                    row.insertCell().textContent = period.name;
-                    row.insertCell().textContent = `${period.temperature}${degreeSymbol}${period.temperatureUnit}`;
-                    row.insertCell().textContent = period.shortForecast || period.detailedForecast;
-
-                    const iconCell = row.insertCell();
-                    const img = document.createElement("img");
-                    img.src = period.icon;
-                    img.alt = "Weather icon";
-                    img.width = 40;
-                    iconCell.appendChild(img);
-                });
-            })
-            .catch(err => console.error("Error fetching data:", err));
+                        const iconCell = row.insertCell();
+                        const img = document.createElement("img");
+                        img.src = period.icon;
+                        img.alt = "Weather icon";
+                        iconCell.appendChild(img);
+                    });
+                })
+                .catch(err => console.error("Error fetching data:", err));
+        };
     </script>
 </body>
 </html>
