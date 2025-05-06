@@ -1,46 +1,69 @@
 <!DOCTYPE html>
-<script type="text/javascript">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature Conversion</title>
+</head>
+<body>
 
-    console.log("---------------------")
-    console.log("PART 1...")
+    <h1>Temperature Conversion</h1>
+    <a href="../index.html">Home</a>
 
-    // Part 1: Direct calculation
-    const tempC = -270;
-    const tempF = (9 / 5) * tempC + 32;
+    <h2>Part 1</h2>
+    <p>This part calculates Fahrenheit from a hardcoded Celsius value (-270°C).</p>
 
-    console.log("Celsius:", tempC);
-    console.log("Fahrenheit:", tempF);
+    <h2>Part 2</h2>
+    <p>This part uses a function to convert Celsius to Fahrenheit and logs the result.</p>
 
+    <h2>Part 3</h2>
+    <p>Enter a Celsius temperature to convert it dynamically to Fahrenheit:</p>
 
-    console.log("---------------------")
-    console.log("PART 2...")
+    <label for="input-temp-c">Celsius Temperature:</label>
+    <input id="input-temp-c" type="number" placeholder="-270" value="-270">
+    <button id="calculate">Calculate</button>
 
-    // Part 2: Function for conversion
-    function calculateTemp(tempC) {
-        return (9 / 5) * tempC + 32;
-    }
+    <br>
+    <label>Fahrenheit Temperature:</label>
+    <span id="display-temp-f">TODO</span>
 
-    const convertedTemp = calculateTemp(-270);
-    console.log("Celsius:", -270);
-    console.log("Fahrenheit (via function):", convertedTemp);
+    <script type="text/javascript">
+        console.log("---------------------")
+        console.log("PART 1...");
 
+        const tempC = -270;
+        const tempF = (9 / 5) * tempC + 32;
 
-    console.log("---------------------")
-    console.log("PART 3...")
+        console.log("Celsius:", tempC);
+        console.log("Fahrenheit:", tempF);
 
-    // Part 3: DOM interaction
-    const inputTempC = document.getElementById("input-temp-c");
-    const displayTempF = document.getElementById("display-temp-f");
-    const calculateButton = document.getElementById("calculate");
+        console.log("---------------------")
+        console.log("PART 2...");
 
-    calculateButton.addEventListener("click", function () {
-        const celsiusInput = parseFloat(inputTempC.value);
-        if (isNaN(celsiusInput)) {
-            displayTempF.textContent = "Invalid input";
-            return;
+        function calculateTemp(tempC) {
+            return (9 / 5) * tempC + 32;
         }
-        const fahrenheitOutput = calculateTemp(celsiusInput);
-        displayTempF.textContent = fahrenheitOutput.toFixed(2); // Round to 2 decimal places
-    });
 
-</script>
+        const convertedTemp = calculateTemp(-270);
+        console.log("Celsius:", -270);
+        console.log("Fahrenheit (via function):", convertedTemp);
+
+        console.log("---------------------")
+        console.log("PART 3...");
+
+        const inputTempC = document.getElementById("input-temp-c");
+        const displayTempF = document.getElementById("display-temp-f");
+        const calculateButton = document.getElementById("calculate");
+
+        calculateButton.addEventListener("click", function () {
+            const celsiusInput = parseFloat(inputTempC.value);
+            if (isNaN(celsiusInput)) {
+                displayTempF.textContent = "Invalid input";
+                return;
+            }
+            const fahrenheitOutput = calculateTemp(celsiusInput);
+            displayTempF.textContent = fahrenheitOutput.toFixed(2);
+        });
+    </script>
+
+</body>
+</html>

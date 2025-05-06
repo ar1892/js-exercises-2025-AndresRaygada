@@ -1,35 +1,63 @@
 <!DOCTYPE html>
-<script type="text/javascript">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Area of a Circle</title>
+</head>
+<body>
 
-    console.log("---------------------")
-    console.log("PART 1...")
+    <h1>Area of a Circle</h1>
+    <a href="../index.html">Home</a>
 
-    function calculateCircleArea(radius) {
-        return Math.PI * radius * radius;
-    }
+    <h2>Part 1</h2>
+    <p>
+        This part calculates the area of a circle with radius 9 and logs it to the console.
+    </p>
 
-    const radius = 9;
-    const area = calculateCircleArea(radius);
+    <h2>Part 2</h2>
+    <p>
+        Enter a radius to calculate the area dynamically:
+    </p>
 
-    console.log("Radius:", radius);
-    console.log("Area:", area);
+    <label for="input-radius">Radius:</label>
+    <input id="input-radius" type="number" placeholder="9" value="9">
+    <button id="calculate">Calculate</button>
 
+    <br>
+    <label>Area:</label>
+    <span id="display-area">TODO</span>
 
-    console.log("---------------------")
-    console.log("PART 2...")
+    <script type="text/javascript">
+        console.log("---------------------")
+        console.log("PART 1...")
 
-    const inputRadius = document.getElementById("input-radius");
-    const displayArea = document.getElementById("display-area");
-    const calculateButton = document.getElementById("calculate");
-
-    calculateButton.addEventListener("click", function() {
-        const userRadius = parseFloat(inputRadius.value);
-        if (isNaN(userRadius) || userRadius < 0) {
-            displayArea.textContent = "Invalid radius";
-            return;
+        function calculateCircleArea(radius) {
+            return Math.PI * radius * radius;
         }
-        const userArea = calculateCircleArea(userRadius);
-        displayArea.textContent = userArea.toFixed(2);
-    });
 
-</script>
+        const radius = 9;
+        const area = calculateCircleArea(radius);
+
+        console.log("Radius:", radius);
+        console.log("Area:", area);
+
+        console.log("---------------------")
+        console.log("PART 2...")
+
+        const inputRadius = document.getElementById("input-radius");
+        const displayArea = document.getElementById("display-area");
+        const calculateButton = document.getElementById("calculate");
+
+        calculateButton.addEventListener("click", function() {
+            const userRadius = parseFloat(inputRadius.value);
+            if (isNaN(userRadius) || userRadius < 0) {
+                displayArea.textContent = "Invalid radius";
+                return;
+            }
+            const userArea = calculateCircleArea(userRadius);
+            displayArea.textContent = userArea.toFixed(2);
+        });
+    </script>
+
+</body>
+</html>
